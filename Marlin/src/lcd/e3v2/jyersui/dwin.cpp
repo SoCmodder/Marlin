@@ -2069,27 +2069,27 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
           case BEDPID_KP:
             if (draw) {
               Draw_Menu_Item(row, ICON_Version, F("Kp Value"));
-              Draw_Float(thermalManager.temp_bed.pid.Kp, row, false, 100);
+              //Draw_Float(thermalManager.temp_bed.pid.Kp, row, false, 100);
             }
             else {
-              Modify_Value(thermalManager.temp_bed.pid.Kp, 0, 5000, 100, thermalManager.updatePID);
+              //Modify_Value(thermalManager.temp_bed.pid.Kp, 0, 5000, 100, thermalManager.updatePID);
             }
             break;
           case BEDPID_KI:
             if (draw) {
               Draw_Menu_Item(row, ICON_Version, F("Ki Value"));
-              Draw_Float(unscalePID_i(thermalManager.temp_bed.pid.Ki), row, false, 100);
+              //Draw_Float(unscalePID_i(thermalManager.temp_bed.pid.Ki), row, false, 100);
             }
             else
-              Modify_Value(thermalManager.temp_bed.pid.Ki, 0, 5000, 100, thermalManager.updatePID);
+              //Modify_Value(thermalManager.temp_bed.pid.Ki, 0, 5000, 100, thermalManager.updatePID);
             break;
           case BEDPID_KD:
             if (draw) {
               Draw_Menu_Item(row, ICON_Version, F("Kd Value"));
-              Draw_Float(unscalePID_d(thermalManager.temp_bed.pid.Kd), row, false, 100);
+              //Draw_Float(unscalePID_d(thermalManager.temp_bed.pid.Kd), row, false, 100);
             }
             else
-              Modify_Value(thermalManager.temp_bed.pid.Kd, 0, 5000, 100, thermalManager.updatePID);
+              //Modify_Value(thermalManager.temp_bed.pid.Kd, 0, 5000, 100, thermalManager.updatePID);
             break;
         }
         break;
@@ -4238,10 +4238,10 @@ void CrealityDWINClass::Value_Control() {
       sprintf_P(cmd, PSTR("M290 Z%s"), dtostrf((tempvalue / valueunit - zoffsetvalue), 1, 3, str_1));
       gcode.process_subcommands_now(cmd);
     }
-    if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Ki) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Ki))
-      tempvalue = scalePID_i(tempvalue);
-    if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Kd) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Kd))
-      tempvalue = scalePID_d(tempvalue);
+    // if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Ki) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Ki))
+    //   tempvalue = scalePID_i(tempvalue);
+    // if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Kd) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Kd))
+    //   tempvalue = scalePID_d(tempvalue);
     switch (valuetype) {
       case 0: *(float*)valuepointer = tempvalue / valueunit; break;
       case 1: *(uint8_t*)valuepointer = tempvalue / valueunit; break;
@@ -4636,12 +4636,12 @@ void CrealityDWINClass::Confirm_Control() {
 /* In-Menu Value Modification */
 
 void CrealityDWINClass::Setup_Value(float value, float min, float max, float unit, uint8_t type) {
-  if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Ki) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Ki))
-    tempvalue = unscalePID_i(value) * unit;
-  else if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Kd) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Kd))
-    tempvalue = unscalePID_d(value) * unit;
-  else
-    tempvalue = value * unit;
+  // if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Ki) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Ki))
+  //   tempvalue = unscalePID_i(value) * unit;
+  // else if (TERN0(HAS_HOTEND, valuepointer == &thermalManager.temp_hotend[0].pid.Kd) || TERN0(HAS_HEATED_BED, valuepointer == &thermalManager.temp_bed.pid.Kd))
+  //   tempvalue = unscalePID_d(value) * unit;
+  // else
+  tempvalue = value * unit;
   valuemin = min;
   valuemax = max;
   valueunit = unit;
